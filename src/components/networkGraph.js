@@ -50,6 +50,14 @@ class NetworkGraph extends BasicComponent {
     });
   }
 
+  addPath(path) {
+    this.group.append('path')
+      .attr('d', path)
+      .attr('fill', '#fff')
+      .attr('stroke', 'blue')
+      .attr('stroke-width', 3);
+  }
+
   getWidthFromSVG(svg) {
     if (svg && svg.width && svg.width.baseVal && svg.width.baseVal.value) {
       return _.round(svg.width.baseVal.value);

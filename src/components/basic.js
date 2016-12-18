@@ -1,7 +1,7 @@
 
 class BasicComponent {
 
-  constructor(director){
+  constructor(director) {
     this.director = director;
     this.d3 = this.director.d3;
   }
