@@ -7,3 +7,9 @@
 .selected {
   border: 1px solid #ddd;
 }
+
+.draw-connect-path {
+  color: #333;
+  stroke: #339999;
+  stroke-width: 1.5px;
+}

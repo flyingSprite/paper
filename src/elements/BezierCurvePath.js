@@ -20,6 +20,8 @@ class BezierCurvePath extends Element{
   constructor(director, layout, options) {
     super(director, layout, options);
     this.line = undefined;
+    this.firstConnectLine = undefined;
+    this.secondConnectLine = undefined;
   }
 
   drawNodePoint(position) {
@@ -41,12 +43,55 @@ class BezierCurvePath extends Element{
           .attr('cx', position.x)
           .attr('cy', position.y);
         self.drawBezierCurvePath();
+        self.drawConnectPath();
       }
       function ended() {}
       d3.event.on('drag', dragged).on('end', ended);
     }));
   }
 
+  /**
+   * Draw connect path.
+   */
+  drawConnectPath() {
+    const startPosition = this.options.startPosition;
+    const endPosition = this.options.endPosition;
+    const controlPositions = this.options.controlPositions;
+    if (controlPositions && controlPositions.length >= 2) {
+      this.firstConnectLine = this.drawConnectPathForTwoPoint(
+        this.firstConnectLine,
+        startPosition,
+        controlPositions[0]
+      );
+
+      this.secondConnectLine = this.drawConnectPathForTwoPoint(
+        this.secondConnectLine,
+        endPosition,
+        controlPositions[1]
+      );
+    }
+  }
+
+  /**
+   * Draw connect path by line and two positions
+   */
+  drawConnectPathForTwoPoint(line, position1, position2) {
+    const path = this.director.d3.path();
+    path.moveTo(position1.x, position1.y);
+    path.lineTo(position2.x, position2.y);
+    if (line) {
+      line.attr('d', path.toString());
+    } else {
+      line = this.layout.append('path')
+          .attr('d', path.toString())
+          .attr('class', 'draw-connect-path');
+    }
+    return line;
+  }
+
+  /*
+   * Using D3 path to get bezier curve path argument.
+   */
   drawBezierCurvePath() {
     const startPosition = this.options.startPosition;
     const endPosition = this.options.endPosition;
@@ -64,27 +109,31 @@ class BezierCurvePath extends Element{
         endPosition.y
       );
     }
-    // this.path.closePath();
     this.applyToLayout();
   }
 
+  /*
+   * Start Draw Bezier Curve.
+   */
   draw() {
     this.drawBezierCurvePath();
-
+    this.drawConnectPath();
     const startPosition = this.options.startPosition;
     const endPosition = this.options.endPosition;
     const controlPositions = this.options.controlPositions;
-    this.drawNodePoint(startPosition);
-    this.drawNodePoint(endPosition);
     if (controlPositions && controlPositions.length >= 2) {
       this.drawNodePoint(controlPositions[0]);
       this.drawNodePoint(controlPositions[1]);
     }
 
+    this.drawNodePoint(startPosition);
+    this.drawNodePoint(endPosition);
   }
 
+  /**
+   * Draw bezier curve path on layout.
+   */
   applyToLayout() {
-    console.log(this.path.toString());
     if (this.line) {
       this.line.attr('d', this.path.toString());
     } else {
@@ -94,15 +143,6 @@ class BezierCurvePath extends Element{
           .attr('stroke', '#ddd')
           .attr('fill', 'transparent');
     }
-
-  }
-
-  startEdit() {
-
-  }
-
-  endEdit() {
-
   }
 
 }
