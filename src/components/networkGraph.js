@@ -26,7 +26,7 @@ class NetworkGraph extends BasicComponent {
       }
       let importedNode = document.importNode(xml.documentElement, true);
       let svgGroup = self.group.append('g').attr('fill', '#fff');
-
+      svgGroup.append('rect').attr('fill', '#fff');
       var node = {};
 
       // Add svg file in svgGroup
@@ -44,6 +44,11 @@ class NetworkGraph extends BasicComponent {
       node.name = newName;
       node.element = svgGroup;
       self.nodes[newName] = node;
+
+      // TODO: let rect margin: 5px;
+      svgGroup.select('rect')
+          .attr('width', node.width)
+          .attr('height', node.height);
 
       svgGroup.attr('transform', `translate(${node.x}, ${node.y})`);
       self.addEvents(self.nodes[newName]);
@@ -101,9 +106,14 @@ class NetworkGraph extends BasicComponent {
   selected(node) {
     if (this.selectedNode) {
       this.selectedNode.element.attr('class', '');
+      this.selectedNode.element.select('rect')
+          .attr('stroke-width', 0);
     }
     this.selectedNode = node;
     this.selectedNode.element.attr('class', 'selected');
+    this.selectedNode.element.select('rect')
+        .attr('stroke-width', 1)
+        .attr('stroke', '#93d893');
   }
 
   setPosition(dx, dy) {
