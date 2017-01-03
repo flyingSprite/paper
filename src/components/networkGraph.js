@@ -55,7 +55,8 @@ class NetworkGraph extends BasicComponent {
       .attr('d', path)
       .attr('fill', '#fff')
       .attr('stroke', 'blue')
-      .attr('stroke-width', 3);
+      .attr('stroke-width', 2)
+      .attr('marker-end', 'url(#arrow)');
   }
 
   getWidthFromSVG(svg) {
