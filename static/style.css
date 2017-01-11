@@ -1,7 +1,7 @@
 
 .svg-sence svg {
-    cursor: pointer;
-  }
+  cursor: pointer;
+  border: 1px solid #eee;
 }
 
 .selected {
@@ -12,4 +12,17 @@
   color: #333;
   stroke: #339999;
   stroke-width: 1.5px;
+}
+
+.bg-line-standard {
+  fill: none;
+  stroke: #8a928b;
+  stroke-width: 1;
+  stroke-dasharray: 4px;
+  opacity: 0.5;
+}
+
+.svg-backgound-box {
+  fill: honeydew;
+  stroke-width: 0;
 }

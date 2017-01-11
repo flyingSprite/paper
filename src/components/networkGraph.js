@@ -11,6 +11,7 @@ class NetworkGraph extends BasicComponent {
     this.nodes = {};
     this.group = undefined;
     this.selectedNode = undefined;
+    this.padding = 6;
     this.init();
   }
 
@@ -18,6 +19,13 @@ class NetworkGraph extends BasicComponent {
     this.group = new StandardLayout(this.director).create();
   }
 
+  /**
+   *  One svg element contains one rect background and svg file in g label.
+   *  this.group
+   *    +-- background box rect
+   *    +-- svg group
+   *        +-- svg file
+   */
   addSvg(name, dx=0, dy=0) {
     const self = this;
     this.d3.xml(CONFIG.svgPath + name, function(error, xml) {
@@ -25,32 +33,33 @@ class NetworkGraph extends BasicComponent {
         throw error;
       }
       let importedNode = document.importNode(xml.documentElement, true);
-      let svgGroup = self.group.append('g').attr('fill', '#fff');
-      svgGroup.append('rect').attr('fill', '#fff');
-      var node = {};
 
-      // Add svg file in svgGroup
+      var node = { dx: dx, dy: dy };
+      // Add background box in group.
+      let backgroundBox = self.group.append('rect')
+          .attr('class', 'svg-backgound-box');
+      let svgGroup = self.group.append('g');
+      // Add svg file in group
       svgGroup.select(function() {
-        // console.log(this);
         var svgNode = this.appendChild(importedNode.cloneNode(true));
-
         // Get width and height from svg element.
-        node.width = self.getWidthFromSVG(svgNode);
-        node.height = self.getHeightFromSVG(svgNode);
+        node.width = self.getWidthFromSVG(svgNode) + self.padding;
+        node.height = self.getHeightFromSVG(svgNode) + self.padding;
       });
-      node.x = dx - node.width / 2;
-      node.y = dy - node.height / 2;
       const newName = name + new Date().getTime();
       node.name = newName;
-      node.element = svgGroup;
-      self.nodes[newName] = node;
-
+      node.element = self.group;
+      self.nodes[node.name] = node;
+      // svgGroup.attr('transform', `translate(${node.width}, ${node.height})`);
       // TODO: let rect margin: 5px;
-      svgGroup.select('rect')
+      self.group.attr('transform', `translate(${node.dx}, ${node.dx})`);
+      backgroundBox
           .attr('width', node.width)
           .attr('height', node.height);
+      svgGroup.attr(
+        'transform',
+        `translate(${self.padding / 2}, ${self.padding / 2})`);
 
-      svgGroup.attr('transform', `translate(${node.x}, ${node.y})`);
       self.addEvents(self.nodes[newName]);
     });
   }

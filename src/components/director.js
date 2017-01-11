@@ -7,6 +7,8 @@ import StandardLayout from './standardLayout';
 
 import BezierCurvePath from '../elements/BezierCurvePath';
 
+import { StandardBackground } from '../background';
+
 import _ from 'lodash';
 
 class Director{
@@ -23,7 +25,14 @@ class Director{
     // 获取SVG的高
     this.height = parseInt(this.scene.style('height').replace('px', ''));
     this.events = [];
+    this.initEnvironment();
 
+  }
+
+  initEnvironment() {
+    // init background
+    new StandardBackground(this).gen();
+    // init arrow marker.
     this.addMarker();
   }
 
