@@ -3,6 +3,8 @@ import babel from 'gulp-babel';
 import uglify from 'gulp-uglify';
 import concat from 'gulp-concat';
 import connect from 'gulp-connect';
+import sass from 'gulp-sass';
+import minifyCss from 'gulp-minify-css';
 
 // import babelify from 'babelify';
 import source from 'vinyl-source-stream';
@@ -37,6 +39,16 @@ gulp.task('build', () => {
             .pipe(sourcemaps.write('./'))
             .pipe(gulp.dest('./dist'))
             .pipe(livereload());
+});
+
+gulp.task('sass', function() {
+  return gulp.src('./static/sass/index.scss')
+  .pipe(sass().on('error', sass.logError))
+  .pipe(minifyCss())
+  .pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(concat('index.css'))
+  .pipe(sourcemaps.write('./'))
+  .pipe(gulp.dest('./static'));
 });
 
 gulp.task('scripts', () => {

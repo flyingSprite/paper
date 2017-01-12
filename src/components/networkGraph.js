@@ -17,6 +17,7 @@ class NetworkGraph extends BasicComponent {
 
   init() {
     this.group = new StandardLayout(this.director).create();
+    this.group.attr('class', 'svg-box');
   }
 
   /**
@@ -28,17 +29,17 @@ class NetworkGraph extends BasicComponent {
    */
   addSvg(name, dx=0, dy=0) {
     const self = this;
+    const svgElement = this.group.append('g');
     this.d3.xml(CONFIG.svgPath + name, function(error, xml) {
       if (error) {
         throw error;
       }
       let importedNode = document.importNode(xml.documentElement, true);
-
       var node = { dx: dx, dy: dy };
       // Add background box in group.
-      let backgroundBox = self.group.append('rect')
-          .attr('class', 'svg-backgound-box');
-      let svgGroup = self.group.append('g');
+      let backgroundBox = svgElement.append('rect')
+          .attr('class', 'svg-box-background');
+      let svgGroup = svgElement.append('g');
       // Add svg file in group
       svgGroup.select(function() {
         var svgNode = this.appendChild(importedNode.cloneNode(true));
@@ -48,11 +49,11 @@ class NetworkGraph extends BasicComponent {
       });
       const newName = name + new Date().getTime();
       node.name = newName;
-      node.element = self.group;
+      node.element = svgElement;
       self.nodes[node.name] = node;
       // svgGroup.attr('transform', `translate(${node.width}, ${node.height})`);
       // TODO: let rect margin: 5px;
-      self.group.attr('transform', `translate(${node.dx}, ${node.dx})`);
+      svgElement.attr('transform', `translate(${node.dx}, ${node.dx})`);
       backgroundBox
           .attr('width', node.width)
           .attr('height', node.height);
@@ -89,7 +90,6 @@ class NetworkGraph extends BasicComponent {
 
   addEvents(node) {
     const self = this;
-
     // Add click event
     node.element.on('click', function () {
       self.selected(node);
@@ -119,7 +119,7 @@ class NetworkGraph extends BasicComponent {
           .attr('stroke-width', 0);
     }
     this.selectedNode = node;
-    this.selectedNode.element.attr('class', 'selected');
+    this.selectedNode.element.attr('class', 'active');
     this.selectedNode.element.select('rect')
         .attr('stroke-width', 1)
         .attr('stroke', '#93d893');

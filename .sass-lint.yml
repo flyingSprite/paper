@@ -1,0 +1,2 @@
+rules:
+  extra-properties: ['rx', 'ry']

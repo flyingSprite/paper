@@ -1,0 +1,20 @@
+
+$box-background-color: #fff;
+$box-background-color-click: #f4f7f8;
+
+.svg-box {
+  // unknown property
+  .svg-box-background {
+    fill: $box-background-color;
+    rx: 10;
+    ry: 10;
+    stroke-width: 0;
+  }
+
+  .active {
+    .svg-box-background {
+      fill: $box-background-color-click;
+      stroke-width: 1;
+    }
+  }
+}

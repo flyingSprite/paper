@@ -10,16 +10,16 @@ const dy = $('#dy');
 const set = $('#set');
 
 director.addEvent(function (node) {
-  dx.val(node.x + node.width / 2);
-  dy.val(node.y + node.height / 2);
+  dx.val(node.width / 2 + node.dx);
+  dy.val(node.height / 2 + node.dy);
 });
 
 // let bezierCurvePath = director.createBezierCurvePath();
 // bezierCurvePath.draw();
 
 let networkGraph = director.createNetworkGraph();
-networkGraph.addSvg('security_device.svg', 161, 94);
-// networkGraph.addSvg('ax.svg', -157, 90);
+networkGraph.addSvg('ax.svg', 157, 90);
+networkGraph.addSvg('security_device.svg', 20, 94);
 //
 // networkGraph.addSvg('unlock.svg', -158.5, -100.5);
 // networkGraph.addSvg('locked.svg', -348, 22);
