@@ -1,6 +1,6 @@
 
 import MultiLayout from './multi-layout.js';
-import BasicComponent from './basic';
+import BasicComponent from '../core/basic';
 
 
 class CenterPoint extends BasicComponent{

@@ -48,7 +48,7 @@ gulp.task('sass', function() {
   .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(concat('index.css'))
   .pipe(sourcemaps.write('./'))
-  .pipe(gulp.dest('./static'));
+  .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('scripts', () => {

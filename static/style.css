@@ -22,6 +22,14 @@
   opacity: 0.5;
 }
 
+path {
+  fill: none;
+  stroke: #000;
+  stroke-width: 3px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
 /*.svg-backgound-box {
   fill: honeydew;
   stroke-width: 0;

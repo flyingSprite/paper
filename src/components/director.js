@@ -8,6 +8,7 @@ import StandardLayout from './standardLayout';
 import BezierCurvePath from '../elements/BezierCurvePath';
 
 import { StandardBackground } from '../background';
+// import scale from 'd3-axis';
 
 import _ from 'lodash';
 
@@ -16,9 +17,14 @@ class Director{
   constructor(d3, id) {
     this.d3 = d3;
     // 创建一个SVG，占据整个div
+    // var axis = d3.axisLeft(scale);
     this.scene = this.d3.select('#' + id).append('svg')
+            // .attr('class', 'axis')
             .style('width', '100%')
             .style('height', '100%');
+        // .append('g')
+        //     .attr('transform', 'translate(0, 30)')
+        //     .call(axis);
 
     // 获取SVG的宽
     this.width = parseInt(this.scene.style('width').replace('px', ''));

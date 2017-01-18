@@ -1,5 +1,5 @@
 
-import BasicComponent from './basic';
+import BasicComponent from '../core/basic';
 import StandardLayout from './standardLayout';
 import _ from 'lodash';
 

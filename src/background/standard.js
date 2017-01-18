@@ -1,5 +1,5 @@
 
-import BasicComponent from '../components/basic';
+import BasicComponent from '../core/basic';
 // import StandardLayout from '../components/standardLayout';
 
 class StandardBackground extends BasicComponent {
