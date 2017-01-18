@@ -1,6 +1,5 @@
 
 import BasicComponent from '../core/basic';
-// import StandardLayout from '../components/standardLayout';
 
 class AxisBackground extends BasicComponent {
   constructor(director) {

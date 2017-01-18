@@ -7,7 +7,7 @@ import StandardLayout from './standardLayout';
 
 import BezierCurvePath from '../elements/BezierCurvePath';
 
-import { AxisBackground, StandardBackground } from '../background';
+import { AxisBackground, BrushBackground, StandardBackground } from '../background';
 // import scale from 'd3-axis';
 
 import _ from 'lodash';
@@ -19,12 +19,8 @@ class Director{
     // 创建一个SVG，占据整个div
     // var axis = d3.axisLeft(scale);
     this.scene = this.d3.select('#' + id).append('svg')
-            // .attr('class', 'axis')
             .style('width', '100%')
             .style('height', '100%');
-        // .append('g')
-        //     .attr('transform', 'translate(0, 30)')
-        //     .call(axis);
 
     // 获取SVG的宽
     this.width = parseInt(this.scene.style('width').replace('px', ''));
@@ -37,6 +33,8 @@ class Director{
 
   initEnvironment() {
     new AxisBackground(this).gen();
+
+    new BrushBackground(this).gen();
     // init background
     const name = false;
     if (name) {
@@ -92,16 +90,6 @@ class Director{
       ]
     } );
   }
-
-  // centerPoint () {
-  //   // 创建一个中心点
-  //   this.centerPoint = new CenterPoint(this);
-  // }
-  //
-  // webSpider () {
-  //   // 创建一个虚拟的蜘蛛网🕸️
-  //   this.webSpider = new WebSpider(this);
-  // }
 }
 
 export default Director;
