@@ -7,7 +7,7 @@ import StandardLayout from './standardLayout';
 
 import BezierCurvePath from '../elements/BezierCurvePath';
 
-import { StandardBackground } from '../background';
+import { AxisBackground, StandardBackground } from '../background';
 // import scale from 'd3-axis';
 
 import _ from 'lodash';
@@ -36,8 +36,12 @@ class Director{
   }
 
   initEnvironment() {
+    new AxisBackground(this).gen();
     // init background
-    new StandardBackground(this).gen();
+    const name = false;
+    if (name) {
+      new StandardBackground(this).gen();
+    }
     // init arrow marker.
     this.addMarker();
   }
